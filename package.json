@@ -1,0 +1,20 @@
+{
+  "name": "scale-to-modes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scale to modes.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tarrega88/Scale-to-Modes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tarrega88/Scale-to-Modes/issues"
+  },
+  "homepage": "https://github.com/Tarrega88/Scale-to-Modes#readme"
+}
