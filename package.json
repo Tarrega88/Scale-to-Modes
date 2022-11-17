@@ -2,8 +2,9 @@
   "name": "scale-to-modes",
   "version": "1.0.0",
   "description": "",
-  "main": "scale to modes.js",
+  "main": "scalerizor.js",
   "scripts": {
+    "scales": "node scalerizor.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
