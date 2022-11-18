@@ -5,6 +5,7 @@
   "main": "scalerizor.js",
   "scripts": {
     "scales": "node scalerizor.js",
+    "scales2": "node scalerizor2.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
