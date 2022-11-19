@@ -53,7 +53,6 @@ function run() {
     }
     const foundNotesOfScale = findNotesOfScale(startingNote, guitarString1, scaleIntervals);
 
-    // console.log(foundNotesOfScale);
 
     function createEmptyFretBoard() {
         let guitarFretBoard = {
@@ -85,7 +84,6 @@ function run() {
 
 
     const foundFrets = findTheFrets(foundNotesOfScale, emptyFretBoard);
-    // console.log(foundFrets)
 
     function extendTheFretBoard(foundFrets) {
         for (let i = 0; i < Object.keys(foundFrets).length; i++) {
@@ -99,13 +97,10 @@ function run() {
 
     const extendedFretBoard = extendTheFretBoard(foundFrets);
 
-    // console.log(extendedFretBoard)
-
     function adjustFretSpacing() {
         let fretSpacing = prompt("Which frets would you like to play this scale on?  Example: 4-7", "");
         fretSpacing = fretSpacing.replace(/ /g, "");
         fretSpacing = fretSpacing.split("-");
-        // console.log(fretSpacing)
         fretSpacing[0] = Number(fretSpacing[0]);
         fretSpacing[1] = Number(fretSpacing[1]);
         const difference = fretSpacing[1] - fretSpacing[0];
@@ -159,19 +154,13 @@ function run() {
 
     const chosenFretSpacing = applyFretSpacing(extendedFretBoard, adjustedFretSpacing);
 
-    // console.log(chosenFretSpacing);
-
-    // console.log(foundNotesOfScale);
-
     function logTheNotes(chosenFretSpacing) {
-        //i for both the chosenFretSpacing array and the guitarStrings array
         let attemptedScale = [];
         for (let i = Object.keys(chosenFretSpacing).length - 1; i >= 0; i--) {
             for (let j = 0; j < Object.values(chosenFretSpacing)[i].length; j++) {
                 for (let k = 0; k < Object.values(guitarStrings)[i].length; k++) {
                     if (Object.values(chosenFretSpacing)[i][j] === k) {
                         attemptedScale.push(Object.values(guitarStrings)[i][k])
-                        // console.log(Object.values(guitarStrings)[i][k]);
                     }
                 }
             }
@@ -179,61 +168,46 @@ function run() {
         return attemptedScale;
     }
     const loggedNotes = logTheNotes(chosenFretSpacing);
-    // console.log(loggedNotes);
 
     function displayBrokenScale(notes, frets, scale) {
-        // console.log(notes);
-        // console.log(frets);
+
         let brokenScale = [];
         for (let i = Object.keys(frets).length - 1; i >= 0; i--) {
             for (let j = 0; j < Object.values(frets)[i].length; j++) {
-                // console.log(Object.values(guitarStrings)[i].at(Object.values(frets)[i][j]))
-
-                // console.log(Object.values(frets)[i][j]);
                 brokenScale.push(Object.values(guitarStrings)[i].at(Object.values(frets)[i][j]))
-                // console.log(scale);
             }
 
         }
 
-        // console.log(frets);
         return brokenScale;
 
     }
 
     const displayedBrokenScale = displayBrokenScale(loggedNotes, chosenFretSpacing, foundNotesOfScale);
-    // console.log(displayedBrokenScale);
-
     function fixTheScale(brokenScale, scale, frets, fretSpacing) {
         if (fretSpacing[1] - fretSpacing[0] <= 3) {
             addedNotes = true;
-            const startingNote = guitarString1.at(frets[6][0]);
-            console.log(startingNote)
+            const startingNote = guitarString1.at(frets[6][0] % 12);
             let position = scale.indexOf(startingNote);
-            // console.log(scale)
-            // console.log(`Counter: ${position}`)
+            let double = 0;
+            if (fretSpacing[1] >= 12) {
+                double = 12;
+            }
+
             for (let i = Object.keys(frets).length - 1; i >= 0; i--) {
                 for (let j = 0; j < Object.values(frets)[i].length; j++) {
 
                     if (Object.values(guitarStrings)[i].at(Object.values(frets)[i][j]) === scale[position]) {// console.log(`Broken Scale: ${Object.values(guitarStrings)[i].at(Object.values(frets)[i][j])}`);
-                        //               console.log(`Scale: ${scale[position]}`)
                     }
 
-                    if (Object.values(guitarStrings)[i].at(Object.values(frets)[i][j]) !== scale[position]) {
-                        //     console.log("HERE");
-                        // console.log(`Broken Scale: ${Object.values(guitarStrings)[i].at(Object.values(frets)[i][j])}`);
-                        //     console.log(Object.values(frets)[i][j])
-                        //             console.log(Object.values(guitarStrings)[i][Object.values(frets)[i][j]])
+                    if (Object.values(guitarStrings)[i].at(Object.values(frets)[i][j] - double) !== scale[position]) {
 
                         for (let k = Object.values(frets)[i][j]; k >= 0; k--) {
-                            // console.log(Object.values(guitarStrings)[i][k])
                             if (Object.values(guitarStrings)[i][k] === scale[position] && !Object.values(frets)[i].includes(k)) {
-                                Object.values(frets)[i].unshift(k);
-                                // Object.values(frets)[i] = Object.values(frets)[i].sort((a,b)=>a - b);
+                                Object.values(frets)[i].unshift(k + double);
                             }
                         }
-                        // console.log(`Scale Needs: ${scale[position]} on string ${i + 1}`)
-                        // position++
+
                     }
                     position++;
                     if (position >= scale.length) {
@@ -245,9 +219,7 @@ function run() {
         }
     }
     const fixedScale = fixTheScale(displayedBrokenScale, foundNotesOfScale, chosenFretSpacing, adjustedFretSpacing);
-    // console.log(fixedScale)
     if (addedNotes === false) {
-        // console.log(chosenFretSpacing)
     }
 
     function tabItOut(chosenFretSpacing, fixedScale) {
@@ -280,5 +252,4 @@ function run() {
     const tabbed = tabItOut(chosenFretSpacing, fixedScale);
     console.log(tabbed);
 }
-// last bracket
 run();
