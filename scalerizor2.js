@@ -191,7 +191,7 @@ function run() {
             const startingNote = guitarString1.at(frets[6][0] % 12);
             let position = scale.indexOf(startingNote);
             let double = 0;
-            if (fretSpacing[1] > 12) {
+            if (fretSpacing[1] >= 12) {
                 double = 12;
             }
 
