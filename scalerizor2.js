@@ -83,7 +83,9 @@ function run() {
         return guitarFretBoard;
     }
 
+
     const foundFrets = findTheFrets(foundNotesOfScale, emptyFretBoard);
+    // console.log(foundFrets)
 
     function extendTheFretBoard(foundFrets) {
         for (let i = 0; i < Object.keys(foundFrets).length; i++) {
@@ -103,6 +105,7 @@ function run() {
         let fretSpacing = prompt("Which frets would you like to play this scale on?  Example: 4-7", "");
         fretSpacing = fretSpacing.replace(/ /g, "");
         fretSpacing = fretSpacing.split("-");
+        // console.log(fretSpacing)
         fretSpacing[0] = Number(fretSpacing[0]);
         fretSpacing[1] = Number(fretSpacing[1]);
         const difference = fretSpacing[1] - fretSpacing[0];
@@ -205,6 +208,7 @@ function run() {
         if (fretSpacing[1] - fretSpacing[0] <= 3) {
             addedNotes = true;
             const startingNote = guitarString1.at(frets[6][0]);
+            console.log(startingNote)
             let position = scale.indexOf(startingNote);
             // console.log(scale)
             // console.log(`Counter: ${position}`)
@@ -223,9 +227,9 @@ function run() {
 
                         for (let k = Object.values(frets)[i][j]; k >= 0; k--) {
                             // console.log(Object.values(guitarStrings)[i][k])
-                            if (Object.values(guitarStrings)[i][k] === scale[position]) {
-                                Object.values(frets)[i].push(k);
-                                Object.values(frets)[i] = Object.values(frets)[i].sort((a, b) => a - b);
+                            if (Object.values(guitarStrings)[i][k] === scale[position] && !Object.values(frets)[i].includes(k)) {
+                                Object.values(frets)[i].unshift(k);
+                                // Object.values(frets)[i] = Object.values(frets)[i].sort((a,b)=>a - b);
                             }
                         }
                         // console.log(`Scale Needs: ${scale[position]} on string ${i + 1}`)
@@ -241,11 +245,40 @@ function run() {
         }
     }
     const fixedScale = fixTheScale(displayedBrokenScale, foundNotesOfScale, chosenFretSpacing, adjustedFretSpacing);
-    console.log(fixedScale)
+    // console.log(fixedScale)
     if (addedNotes === false) {
-        console.log(chosenFretSpacing)
+        // console.log(chosenFretSpacing)
     }
 
+    function tabItOut(chosenFretSpacing, fixedScale) {
+
+        let fretBoard = {
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+            5: [],
+            6: [],
+        };
+
+        addedNotes === false ? frets = chosenFretSpacing : frets = chosenFretSpacing;
+
+        for (let i = 0; i < Object.keys(fretBoard).length; i++) {
+            Object.values(fretBoard)[i].length = 24;
+        }
+        for (let i = 0; i < Object.keys(fretBoard).length; i++) {
+            for (let j = 0; j < Object.values(fretBoard)[i].length; j++) {
+                if (Object.values(frets)[i].includes(j)) {
+                    Object.values(fretBoard)[i][j] = j;
+                } else {
+                    Object.values(fretBoard)[i][j] = '';
+                }
+            }
+        }
+        return fretBoard;
+    }
+    const tabbed = tabItOut(chosenFretSpacing, fixedScale);
+    console.log(tabbed);
 }
 // last bracket
 run();
