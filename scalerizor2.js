@@ -7,7 +7,8 @@ function run() {
     //Natural Minor: [2, 1, 2, 2,1,2,2];
     //Melodic Minor: [2, 1, 2, 2,2,2,1]
     //Major: [2, 2, 1, 2, 2, 2, 1];
-    let scaleSteps = [2, 1, 2, 2, 2, 2, 1];
+    //Hungarian Minor: [2, 1,3,1,1,3,1]
+    let scaleSteps = [2, 1,3,1,1,3,1]
     let addedNotes = false;
     let guitarString1 = ["e", "f", "f#", "g", "g#", "a", "a#", "b", "c", "c#", "d", "d#"];
 
@@ -190,7 +191,7 @@ function run() {
             const startingNote = guitarString1.at(frets[6][0] % 12);
             let position = scale.indexOf(startingNote);
             let double = 0;
-            if (fretSpacing[1] >= 12) {
+            if (fretSpacing[1] > 12) {
                 double = 12;
             }
 
@@ -204,7 +205,11 @@ function run() {
 
                         for (let k = Object.values(frets)[i][j]; k >= 0; k--) {
                             if (Object.values(guitarStrings)[i][k] === scale[position] && !Object.values(frets)[i].includes(k)) {
+                                if (fretSpacing[0] > 12 && fretSpacing[1] > 12) {
                                 Object.values(frets)[i].unshift(k + double);
+                                } else {
+Object.values(frets)[i].unshift(k);
+}
                             }
                         }
 
